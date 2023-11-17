@@ -188,3 +188,4 @@ See also the list of [contributors](https://github.com/oliverkoehler/torn-api-wr
 # Acknowledgments
 
 * Inspired by Jgollas Torn API Package - [Torn API](https://github.com/jgolla/torn-api)
+* Thank you for the extensive input from [TimbowSix](https://github.com/TimbowSix)
