@@ -1,16 +1,5 @@
-import { TornError } from './utils/helper'
-
-export interface ITornApi {
-  apiKeys: string[]
-  market: IMarket
-}
-
-export interface LowestListing {
-  type: 'bazaar' | 'itemmarket'
-  cost: number
-  quantity: number
-  total_cost: number
-}
+import { TornError } from '../utils/helper'
+import { LowestListing } from './sections'
 
 export interface IMarket {
   bazaar: IBazaar

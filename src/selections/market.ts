@@ -1,5 +1,6 @@
 import { callTornApi, randomKey, TornError } from '../utils/helper'
-import { ItemMarketItem, LowestListing, PointListingWithoutId } from '../interfaces'
+import { LowestListing } from '../interfaces/sections'
+import { ItemMarketItem, PointListingWithoutId } from '../interfaces/market'
 
 export default class Market {
   private readonly apiKeys: string[]

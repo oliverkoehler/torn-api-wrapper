@@ -7,7 +7,8 @@ A wrapper to integrate with the Torn API. Completely type-safe.
 2. [Installing](#installing)
 3. [Using the wrapper](#using-the-wrapper)
     1. [Initial idea](#initial-idea)
-    2. [Market](#market)
+    2. [Error handling](#error-handling)
+    3. [Market](#market)
         1. [getLowestListing(itemId: number)](#getlowestlistingitemid-number)
         2. [Bazaar](#bazaar)
             1. [getItems(itemId: number, limit?: number)](#getitemsitemid-number-limit-number)
@@ -62,10 +63,26 @@ yarn add torn-api-wrapper -D
 
 The wrapper was built to be as close as possible to the Torn Api, making development as intuitive as possible. One of the 7 sections is always called up first, followed by subcategories and then helper functions.
 
-```
+```js
 const market = await api.market.itemmarket.getItems(206)
 const bazaar = await api.market.bazaar.getItems(206)
 ```
+
+## Error handling
+The wrapper will throw an error if the API returns an error. The error will contain the error message and the error code. The error code is the same as the error code returned by the API.
+
+```js
+const bazaar = await api.market.bazaar.getItems(206).catch(e => {
+    console.log(e.message) // "Invalid API key"
+    console.log(e.code) // 2
+})
+
+// Check if bazaar is defined
+if (bazaar) {
+    console.log(bazaar)
+}
+````
+
 ## Market
 #### `getLowestListing(itemId: number)`
 Returns the lowest listing for the given itemId. Possible types: `bazaar`, `itemmarket`
@@ -84,8 +101,7 @@ const bazaar = await api.market.bazaar.getItems(206)
 //   { ID: 49697817, cost: 842700, quantity: 2 },
 //   ...
 // ]
-``` 
-
+```
 ### Itemmarket
 #### `getItems(itemId: number, limit?: number)`
 Returns a list of itemmarket listings for the given itemId

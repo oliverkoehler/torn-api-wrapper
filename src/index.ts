@@ -1,6 +1,7 @@
-import Market from './selections/market'
-import { IMarket, ITornApi } from './interfaces'
 import axios from 'axios'
+import Market from './selections/market'
+import { IMarket } from './interfaces/market'
+import { ITornApi } from './interfaces/sections'
 
 axios.defaults.baseURL = 'https://api.torn.com'
 
