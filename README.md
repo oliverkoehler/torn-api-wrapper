@@ -2,12 +2,31 @@
 
 A wrapper to integrate with the Torn API. Completely type-safe.
 
+# Table of Contents
+1. [Getting Started](#getting-started)
+2. [Installing](#installing)
+3. [Using the wrapper](#using-the-wrapper)
+    1. [Initial idea](#initial-idea)
+    2. [Market](#market)
+        1. [getLowestListing(itemId: number)](#getlowestlistingitemid-number)
+        2. [Bazaar](#bazaar)
+            1. [getItems(itemId: number, limit?: number)](#getitemsitemid-number-limit-number)
+        3. [Itemmarket](#itemmarket)
+            1. [getItems(itemId: number, limit?: number)](#getitemsitemid-number-limit-number-1)
+        4. [Pointsmarket](#pointsmarket)
+            1. [getPoints()](#getpoints)
+            2. [getPointsWithoutIds()](#getpointswithoutids)
+4. [Versioning](#versioning)
+5. [Authors](#authors)
+6. [Acknowledgments](#acknowledgments)
+
 ## Getting Started
 
 In this section I will show you how to install and use the wrapper.
+It is possible to pass one `apiKey:string` or `apiKey[]` to the constructor. A random key is selected from the array. If you pass an array of keys, the wrapper will automatically remove the key if the current key is invalid. 
 
 ```js
-import TornApi from '.'
+const TornApi = require('torn-api-wrapper').default
 
 
 const api = new TornApi('YOUR_API_KEY') // Using a single key
@@ -38,8 +57,8 @@ yarn add torn-api-wrapper -D
 ```
 
 
-## Using the wrapper
-### Initial idea
+# Using the wrapper
+## Initial idea
 
 The wrapper was built to be as close as possible to the Torn Api, making development as intuitive as possible. One of the 7 sections is always called up first, followed by subcategories and then helper functions.
 
@@ -47,18 +66,18 @@ The wrapper was built to be as close as possible to the Torn Api, making develop
 const market = await api.market.itemmarket.getItems(206)
 const bazaar = await api.market.bazaar.getItems(206)
 ```
-### Market
-#### Bazaar
-##### `getItems(itemId: number, limit?: number)`
+## Market
+#### `getLowestListing(itemId: number)`
+Returns the lowest listing for the given itemId. Possible types: `bazaar`, `itemmarket`
+```js
+const lowestListing = await api.market.getLowestListing(206)
+// { type: 'bazaar', cost: 842495, quantity: 6, total_cost: 5054970 }
+````
+### Bazaar
+#### `getItems(itemId: number, limit?: number)`
 Returns a list of bazaar listings for the given itemId
 ```js
-const bazaar = await api.market.bazaar.getItems(206).catch(e => {
-  console.log(e)
-})
-
-if (bazaar) {
-  console.log(bazaar)
-}
+const bazaar = await api.market.bazaar.getItems(206)
 
 // [
 //   { ID: 73075318, cost: 837000, quantity: 50 },
@@ -67,17 +86,11 @@ if (bazaar) {
 // ]
 ``` 
 
-#### Itemmarket
-##### `getItems(itemId: number, limit?: number)`
+### Itemmarket
+#### `getItems(itemId: number, limit?: number)`
 Returns a list of itemmarket listings for the given itemId
 ```js
-const itemmarket = await api.market.itemmarket.getItems(206).catch(e => {
-  console.log(e)
-})
-
-if (itemmarket) {
-  console.log(itemmarket)
-}
+const itemmarket = await api.market.itemmarket.getItems(206)
 
 // [
 //   { ID: 203569084, cost: 840000, quantity: 1 },
@@ -86,19 +99,44 @@ if (itemmarket) {
 // ]
 ``` 
 
+### Pointsmarket
+#### `getPoints()`
+Returns a object of points market items with there ids
+```js
+const pointsmarket = await api.market.pointsmarket.getPoints()
+
+// {
+//   '14686258': { cost: 45870, quantity: 25, total_cost: 1146750 },
+//   '14686272': { cost: 45850, quantity: 2000, total_cost: 91700000 },
+//   ...
+// }
+```
+
+#### `getPointsWithoutIds()`
+Returns a object of points market items with there ids
+```js
+const pointsmarket = await api.market.pointsmarket.getPoints()
+
+// [
+//     { cost: 45870, quantity: 25, total_cost: 1146750 },
+//     { cost: 45870, quantity: 25, total_cost: 1146750 },
+//     ...
+// ]
+
+```
 
 
-## Versioning
+# Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
-## Authors
+# Authors
 
 * **Oliver Köhler** - *Initial work* - [oliverkoehler at GitHub](https://github.com/oliverkoehler)
 
 See also the list of [contributors](https://github.com/oliverkoehler/torn-api-wrapper/graphs/contributors) who participated in this project.
 
 
-## Acknowledgments
+# Acknowledgments
 
 * Inspired by Jgollas Torn API Package - [Torn API](https://github.com/jgolla/torn-api)
