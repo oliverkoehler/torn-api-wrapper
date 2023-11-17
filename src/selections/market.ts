@@ -1,7 +1,7 @@
 import { callTornApi, randomKey, TornError } from '../utils/helper'
-import { ItemMarketItem, LowestListing, PointListingWithoutId } from '../interfaces/market'
+import { IMarket, ItemMarketItem, LowestListing, PointListingWithoutId } from '../interfaces/market'
 
-export default class Market {
+export default class Market implements IMarket {
   private readonly apiKeys: string[]
   bazaar: Bazaar
   itemmarket: Itemmarket

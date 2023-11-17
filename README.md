@@ -17,6 +17,10 @@ A wrapper to integrate with the Torn API. Completely type-safe.
         4. [Pointsmarket](#pointsmarket)
             1. [getPoints()](#getpoints)
             2. [getPointsWithoutIds()](#getpointswithoutids)
+   4. [Torn](#torn)
+        1. [Items](#items)
+            1. [getItemDetails(itemId: number)](#getitemdetailsitemid-number)
+            2. [getItemValue(itemId: number)](#getitemvalueitemid-number)
 4. [Versioning](#versioning)
 5. [Authors](#authors)
 6. [Acknowledgments](#acknowledgments)
@@ -138,9 +142,37 @@ const pointsmarket = await api.market.pointsmarket.getPoints()
 //     { cost: 45870, quantity: 25, total_cost: 1146750 },
 //     ...
 // ]
-
 ```
 
+## Torn
+### Items
+#### `getItemDetails(itemId: number)`
+Retrieves the details of an item
+```js
+const itemDetails = await api.torn.items.getItemDetails(206)
+
+// {
+//   name: 'Xanax',
+//   description: "Increases one's energy.",
+//   effect: 'Increases energy by 250 and happiness by 75. Includes side effects.',
+//   requirement: '',
+//   type: 'Drug',
+//   weapon_type: null,
+//   buy_price: 0,
+//   sell_price: 0,
+//   market_value: 842652,
+//   circulation: 4843666,
+//   image: 'https://www.torn.com/images/items/206/large.png'
+// }
+```
+
+#### `getItemValue(itemId: number)`
+Retrieves the value of an item
+```js
+const itemValue = await api.torn.items.getItemValue(206)
+
+// 842652
+```
 
 # Versioning
 
