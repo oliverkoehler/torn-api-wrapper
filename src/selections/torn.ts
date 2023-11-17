@@ -1,26 +1,27 @@
 import { IItemDetails, IItems, ITorn } from '../interfaces/torn'
-import { callTornApi, randomKey, TornError } from '../utils/helper'
+import { callTornApi, TornError } from '../utils/helper'
+import { ITornApi } from '../interfaces/selections'
 
 export default class Torn implements ITorn {
-  private readonly apiKeys: string[]
+  api: ITornApi
   items: Items
 
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys
-    this.items = new Items(this.apiKeys)
+  constructor(api: ITornApi) {
+    this.api = api
+    this.items = new Items(api)
   }
 }
 
 class Items implements IItems {
-  private readonly apiKeys: string[]
+  api: ITornApi
 
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys
+  constructor(api: ITornApi) {
+    this.api = api
   }
 
   async getItemDetails(itemId: number): Promise<IItemDetails[] | TornError> {
     const res = await callTornApi(`/torn/${itemId}`, {
-      key: randomKey(this.apiKeys),
+      key: this.api.getKey(),
       selections: 'items'
     })
 
@@ -29,7 +30,7 @@ class Items implements IItems {
 
   async getItemValue(itemId: number): Promise<number | TornError> {
     const res = await callTornApi(`/torn/${itemId}`, {
-      key: randomKey(this.apiKeys),
+      key: this.api.getKey(),
       selections: 'items'
     })
 

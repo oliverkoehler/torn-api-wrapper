@@ -18,7 +18,12 @@ export default class TornApi implements ITornApi {
   constructor(apiKeys: string[] | string) {
     this.apiKeys = Array.isArray(apiKeys) ? apiKeys : [apiKeys]
 
-    this.market = new Market(this.apiKeys)
-    this.torn = new Torn(this.apiKeys)
+    this.market = new Market(this)
+    this.torn = new Torn(this)
+  }
+
+  getKey() {
+    // return a random key from the array
+    return this.apiKeys[Math.floor(Math.random() * this.apiKeys.length)]
   }
 }

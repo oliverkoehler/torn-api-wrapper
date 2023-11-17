@@ -1,17 +1,18 @@
 import { callTornApi, randomKey, TornError } from '../utils/helper'
 import { IMarket, ItemMarketItem, LowestListing, PointListingWithoutId } from '../interfaces/market'
+import { ITornApi } from '../interfaces/selections'
 
 export default class Market implements IMarket {
-  private readonly apiKeys: string[]
+  api: ITornApi
   bazaar: Bazaar
   itemmarket: Itemmarket
   pointsmarket: Pointsmarket
 
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys
-    this.bazaar = new Bazaar(this.apiKeys)
-    this.itemmarket = new Itemmarket(this.apiKeys)
-    this.pointsmarket = new Pointsmarket(this.apiKeys)
+  constructor(api: ITornApi) {
+    this.api = api
+    this.bazaar = new Bazaar(api)
+    this.itemmarket = new Itemmarket(api)
+    this.pointsmarket = new Pointsmarket(api)
   }
 
   async getLowestListing(itemId: number): Promise<LowestListing | TornError> {
@@ -39,15 +40,15 @@ export default class Market implements IMarket {
 }
 
 class Bazaar {
-  private readonly apiKeys: string[]
+  api: ITornApi
 
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys
+  constructor(api: ITornApi) {
+    this.api = api
   }
 
   async getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError> {
     const res = await callTornApi(`/market/${itemId}`, {
-      key: randomKey(this.apiKeys),
+      key: this.api.getKey(),
       selections: 'bazaar',
       limit
     })
@@ -57,15 +58,15 @@ class Bazaar {
 }
 
 class Itemmarket {
-  private readonly apiKeys: string[]
+  api: ITornApi
 
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys
+  constructor(api: ITornApi) {
+    this.api = api
   }
 
   async getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError> {
     const res = await callTornApi(`/market/${itemId}`, {
-      key: randomKey(this.apiKeys),
+      key: this.api.getKey(),
       selections: 'itemmarket',
       limit
     })
@@ -75,15 +76,15 @@ class Itemmarket {
 }
 
 class Pointsmarket {
-  private readonly apiKeys: string[]
+  api: ITornApi
 
-  constructor(apiKeys: string[]) {
-    this.apiKeys = apiKeys
+  constructor(api: ITornApi) {
+    this.api = api
   }
 
   async getPointsWithoutIds() {
     const res = await callTornApi('/market/', {
-      key: randomKey(this.apiKeys),
+      key: this.api.getKey(),
       selections: 'pointsmarket'
     })
 
@@ -92,7 +93,7 @@ class Pointsmarket {
 
   async getPoints() {
     const res = await callTornApi('/market/', {
-      key: randomKey(this.apiKeys),
+      key: this.api.getKey(),
       selections: 'pointsmarket'
     })
 
