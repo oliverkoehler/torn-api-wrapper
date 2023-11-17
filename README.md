@@ -39,9 +39,6 @@ yarn add torn-api-wrapper -D
 
 
 ## Using the wrapper
-
-Explain how to run the automated tests for this system
-
 ### Initial idea
 
 The wrapper was built to be as close as possible to the Torn Api, making development as intuitive as possible. One of the 7 sections is always called up first, followed by subcategories and then helper functions.
@@ -52,7 +49,7 @@ const bazaar = await api.market.bazaar.getItems(206)
 ```
 ### Market
 #### Bazaar
-##### `getItems(itemId: number)`
+##### `getItems(itemId: number, limit?: number)`
 Returns a list of bazaar listings for the given itemId
 ```js
 const bazaar = await api.market.bazaar.getItems(206).catch(e => {
@@ -71,7 +68,7 @@ if (bazaar) {
 ``` 
 
 #### Itemmarket
-##### `getItems(itemId: number)`
+##### `getItems(itemId: number, limit?: number)`
 Returns a list of itemmarket listings for the given itemId
 ```js
 const itemmarket = await api.market.itemmarket.getItems(206).catch(e => {

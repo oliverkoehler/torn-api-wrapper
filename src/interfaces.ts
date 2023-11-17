@@ -13,7 +13,12 @@ export interface IMarket {
 
 interface IBazaar {
   apiKeys: string[]
-  getItems(itemId: number): Promise<unknown>
+  /**
+   * Get bazaar items
+   * @param itemId - Item ID
+   * @param limit - Limit of items to return (max 100) default 100
+   */
+  getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError>
 }
 
 interface ItemMarketItem {
@@ -24,5 +29,10 @@ interface ItemMarketItem {
 
 interface IItemmarket {
   apiKeys: string[]
-  getItems(itemId: number): Promise<ItemMarketItem[] | TornError>
+  /**
+   * Get bazaar items
+   * @param itemId - Item ID
+   * @param limit - Limit of items to return (max 100) default 100
+   */
+  getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError>
 }
