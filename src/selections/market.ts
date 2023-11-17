@@ -1,41 +1,42 @@
-import axios from "axios";
+import axios from 'axios'
+import { randomKey } from '../utils/helper'
 
 export default class Market {
-  apiKey: string;
-  bazzar: Bazzar;
-  itemmarket: Itemmarket;
+  apiKeys: string[]
+  bazaar: Bazaar
+  itemmarket: Itemmarket
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
-    this.bazzar = new Bazzar(apiKey)
-    this.itemmarket = new Itemmarket(apiKey)
+  constructor(apiKeys: string[]) {
+    this.apiKeys = apiKeys
+    this.bazaar = new Bazaar(this.apiKeys)
+    this.itemmarket = new Itemmarket(this.apiKeys)
   }
 }
 
 
 
-class Bazzar {
-  apiKey: string;
+class Bazaar {
+  apiKeys: string[]
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
+  constructor(apiKeys: string[]) {
+    this.apiKeys = apiKeys
   }
 
   async getItems(itemId: number) {
-    const res = await axios.get('https://api.torn.com/market/' + itemId + '?selections=bazaar&key=' + this.apiKey)
+    const res = await axios.get('https://api.torn.com/market/' + itemId + '?selections=bazaar&key=' + this.apiKeys[0])
     return res.data
   }
 }
 
 class Itemmarket {
-  apiKey: string;
+  apiKeys: string[]
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
+  constructor(apiKeys: string[]) {
+    this.apiKeys = apiKeys
   }
 
   async getItems(itemId: number) {
-    const res = await axios.get('https://api.torn.com/market/' + itemId + '?selections=itemmarket&key=' + this.apiKey)
+    const res = await axios.get('https://api.torn.com/market/' + itemId + '?selections=itemmarket&key=' + this.apiKeys[0])
     return res.data
   }
 }

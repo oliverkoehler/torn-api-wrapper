@@ -1,12 +1,20 @@
-import Market from "./selections/market"
-import { ITornApi } from "./interfaces"
+import Market from './selections/market'
+import { IMarket, ITornApi } from './interfaces'
 
 export default class TornApi implements ITornApi {
-  apiKey: string;
-  market: Market
+  apiKeys: string[]
+  market: IMarket
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
-    this.market = new Market(apiKey)
+  /**
+   * @param apiKeys - An array of API keys or a single API key
+   */
+  constructor(apiKeys: string[] | string) {
+    if (Array.isArray(apiKeys)) {
+      this.apiKeys = apiKeys
+    } else {
+      this.apiKeys = [apiKeys]
+    }
+
+    this.market = new Market(this.apiKeys)
   }
 }
