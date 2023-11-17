@@ -16,11 +16,7 @@ export default class TornApi implements ITornApi {
    * @param apiKeys - An array of API keys or a single API key
    */
   constructor(apiKeys: string[] | string) {
-    if (Array.isArray(apiKeys)) {
-      this.apiKeys = apiKeys
-    } else {
-      this.apiKeys = [apiKeys]
-    }
+    this.apiKeys = Array.isArray(apiKeys) ? apiKeys : [apiKeys]
 
     this.market = new Market(this.apiKeys)
     this.torn = new Torn(this.apiKeys)
