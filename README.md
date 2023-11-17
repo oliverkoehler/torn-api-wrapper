@@ -14,8 +14,11 @@ const api = new TornApi('YOUR_API_KEY') // Using a single key
 const apiPool = new TornApi(['KEY1', 'KEY2', 'KEY3']) // Using a pool of keys
 
 const getBazaarItems = async () => {
-  const bazaar = await api.market.bazaar.getItems(206)
-  console.log(bazaar)
+  const bazaar = await api.market.bazaar.getItems(206).catch(e => console.log(e))
+  
+  if (bazaar) {
+    console.log(bazaar)
+  }
 }
 
 getBazaarItems ()
@@ -52,7 +55,13 @@ const bazaar = await api.market.bazaar.getItems(206)
 ##### `getItems(itemId: number)`
 Returns a list of bazaar listings for the given itemId
 ```js
-const bazaar = await api.market.bazaar.getItems(206)
+const bazaar = await api.market.bazaar.getItems(206).catch(e => {
+  console.log(e)
+})
+
+if (bazaar) {
+  console.log(bazaar)
+}
 
 // [
 //   { ID: 73075318, cost: 837000, quantity: 50 },
@@ -92,9 +101,6 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 See also the list of [contributors](https://github.com/oliverkoehler/torn-api-wrapper/graphs/contributors) who participated in this project.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
