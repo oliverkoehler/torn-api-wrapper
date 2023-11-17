@@ -65,7 +65,13 @@ const bazaar = await api.market.bazaar.getItems(206)
 ##### `getItems(itemId: number)`
 Returns a list of itemmarket listings for the given itemId
 ```js
-const itemmarket = await api.market.itemmarket.getItems(206)
+const itemmarket = await api.market.itemmarket.getItems(206).catch(e => {
+  console.log(e)
+})
+
+if (itemmarket) {
+  console.log(itemmarket)
+}
 
 // [
 //   { ID: 203569084, cost: 840000, quantity: 1 },

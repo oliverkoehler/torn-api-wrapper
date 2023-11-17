@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { randomKey } from '../utils/helper'
+import axios, { AxiosError } from 'axios'
+import { callTornApi, randomKey, TornError } from '../utils/helper'
 
 export default class Market {
   apiKeys: string[]
@@ -13,8 +13,6 @@ export default class Market {
   }
 }
 
-
-
 class Bazaar {
   apiKeys: string[]
 
@@ -22,9 +20,14 @@ class Bazaar {
     this.apiKeys = apiKeys
   }
 
-  async getItems(itemId: number) {
-    const res = await axios.get('https://api.torn.com/market/' + itemId + '?selections=bazaar&key=' + this.apiKeys[0])
-    return res.data
+  async getItems(itemId: number, limit?: number) {
+    const res = await callTornApi(`/market/${itemId}`, {
+      key: randomKey(this.apiKeys),
+      selections: 'bazaar',
+      limit
+    })
+
+    return res.bazaar
   }
 }
 
@@ -35,8 +38,13 @@ class Itemmarket {
     this.apiKeys = apiKeys
   }
 
-  async getItems(itemId: number) {
-    const res = await axios.get('https://api.torn.com/market/' + itemId + '?selections=itemmarket&key=' + this.apiKeys[0])
-    return res.data
+  async getItems(itemId: number, limit?: number) {
+    const res = await callTornApi(`/market/${itemId}`, {
+      key: randomKey(this.apiKeys),
+      selections: 'itemmarket',
+      limit
+    })
+
+    return res.itemmarket
   }
 }

@@ -1,5 +1,8 @@
 import Market from './selections/market'
 import { IMarket, ITornApi } from './interfaces'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'https://api.torn.com'
 
 export default class TornApi implements ITornApi {
   apiKeys: string[]
