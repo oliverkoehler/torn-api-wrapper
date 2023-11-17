@@ -1,5 +1,4 @@
 import { TornError } from '../utils/helper'
-import { LowestListing } from './sections'
 
 export interface IMarket {
   bazaar: IBazaar
@@ -53,4 +52,11 @@ interface IPointsMarket {
    */
   getPoints(): Promise<PointListing[] | TornError>
   getPointsWithoutIds(): Promise<PointListingWithoutId[] | TornError>
+}
+
+export interface LowestListing {
+  type: 'bazaar' | 'itemmarket'
+  cost: number
+  quantity: number
+  total_cost: number
 }
