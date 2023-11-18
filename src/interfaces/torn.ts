@@ -1,12 +1,10 @@
-import { TornError } from '../utils/helper'
-
 export interface ITorn {
   items: IItems
 }
 
 export interface IItems {
-  getItemDetails(itemId: number): Promise<IItemDetails[] | TornError>
-  getItemValue(itemId: number): Promise<number | TornError>
+  getItemDetails(itemId: number): Promise<IItemDetails[]  | null>
+  getItemValue(itemId: number): Promise<number  | null>
 }
 
 export interface IItemDetails {

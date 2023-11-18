@@ -1,6 +1,12 @@
-import { callTornApi, randomKey, TornError } from '../utils/helper'
-import { IMarket, ItemMarketItem, LowestListing, PointListingWithoutId } from '../interfaces/market'
-import { ITornApi } from '../interfaces/selections'
+import {
+  IMarket,
+  IItemMarketItem,
+  LowestListing,
+  PointListingWithoutId,
+  IBazaar,
+  IItemmarket
+} from '../interfaces/market'
+import { ITornApi, TornError } from '../interfaces/base'
 
 export default class Market implements IMarket {
   api: ITornApi
@@ -15,7 +21,7 @@ export default class Market implements IMarket {
     this.pointsmarket = new Pointsmarket(api)
   }
 
-  async getLowestListing(itemId: number): Promise<LowestListing | TornError> {
+  async getLowestListing(itemId: number): Promise<LowestListing | null> {
     const bazaarItems = await this.bazaar.getItems(itemId, 1)
     const itemmarketItems = await this.itemmarket.getItems(itemId, 1)
 
@@ -39,39 +45,39 @@ export default class Market implements IMarket {
   }
 }
 
-class Bazaar {
+class Bazaar implements IBazaar {
   api: ITornApi
 
   constructor(api: ITornApi) {
     this.api = api
   }
 
-  async getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError> {
-    const res = await callTornApi(`/market/${itemId}`, {
+  async getItems(itemId: number, limit?: number): Promise<IItemMarketItem[] | null> {
+    const res = await this.api.callTornApi(`/market/${itemId}`, {
       key: this.api.getKey(),
       selections: 'bazaar',
       limit
     })
 
-    return res.bazaar
+    return res?.bazaar
   }
 }
 
-class Itemmarket {
+class Itemmarket implements IItemmarket {
   api: ITornApi
 
   constructor(api: ITornApi) {
     this.api = api
   }
 
-  async getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError> {
-    const res = await callTornApi(`/market/${itemId}`, {
+  async getItems(itemId: number, limit?: number): Promise<IItemMarketItem[] | null> {
+    const res = await this.api.callTornApi(`/market/${itemId}`, {
       key: this.api.getKey(),
       selections: 'itemmarket',
       limit
     })
 
-    return res.itemmarket
+    return res?.itemmarket
   }
 }
 
@@ -83,7 +89,7 @@ class Pointsmarket {
   }
 
   async getPointsWithoutIds() {
-    const res = await callTornApi('/market/', {
+    const res = await this.api.callTornApi('/market/', {
       key: this.api.getKey(),
       selections: 'pointsmarket'
     })
@@ -92,11 +98,11 @@ class Pointsmarket {
   }
 
   async getPoints() {
-    const res = await callTornApi('/market/', {
+    const res = await this.api.callTornApi('/market/', {
       key: this.api.getKey(),
       selections: 'pointsmarket'
     })
 
-    return res.pointsmarket
+    return res?.pointsmarket
   }
 }

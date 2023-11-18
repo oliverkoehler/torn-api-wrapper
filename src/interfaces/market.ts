@@ -1,5 +1,3 @@
-import { TornError } from '../utils/helper'
-
 export interface IMarket {
   bazaar: IBazaar
   itemmarket: IItemmarket
@@ -9,31 +7,31 @@ export interface IMarket {
    * Get the lowest listing for item
    * @param itemId - Item ID
    */
-  getLowestListing(itemId: number): Promise<LowestListing | TornError>
+  getLowestListing(itemId: number): Promise<LowestListing | null>
 }
 
-export interface ItemMarketItem {
+export interface IItemMarketItem {
   ID: number
   cost: number
   quantity: number
 }
 
-interface IBazaar {
+export interface IBazaar {
   /**
    * Get bazaar items
    * @param itemId - Item ID
    * @param limit - Limit of items to return (max 100) default 100
    */
-  getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError>
+  getItems(itemId: number, limit?: number): Promise<IItemMarketItem[] | null>
 }
 
-interface IItemmarket {
+export interface IItemmarket {
   /**
    * Get bazaar items
    * @param itemId - Item ID
    * @param limit - Limit of items to return (max 100) default 100
    */
-  getItems(itemId: number, limit?: number): Promise<ItemMarketItem[] | TornError>
+  getItems(itemId: number, limit?: number): Promise<IItemMarketItem[] | null>
 }
 
 export type PointListingWithoutId = {
@@ -42,7 +40,7 @@ export type PointListingWithoutId = {
   total_cost: number
 }
 
-type PointListing = {
+export type PointListing = {
   [id: string]: PointListingWithoutId
 }
 
@@ -50,8 +48,8 @@ interface IPointsMarket {
   /**
    * Get points market listings
    */
-  getPoints(): Promise<PointListing[] | TornError>
-  getPointsWithoutIds(): Promise<PointListingWithoutId[] | TornError>
+  getPoints(): Promise<PointListing[] | null>
+  getPointsWithoutIds(): Promise<PointListingWithoutId[] | null>
 }
 
 export interface LowestListing {

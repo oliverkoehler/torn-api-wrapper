@@ -1,6 +1,5 @@
 import { IItemDetails, IItems, ITorn } from '../interfaces/torn'
-import { callTornApi, TornError } from '../utils/helper'
-import { ITornApi } from '../interfaces/selections'
+import { ITornApi, TornError } from '../interfaces/base'
 
 export default class Torn implements ITorn {
   api: ITornApi
@@ -19,21 +18,21 @@ class Items implements IItems {
     this.api = api
   }
 
-  async getItemDetails(itemId: number): Promise<IItemDetails[] | TornError> {
-    const res = await callTornApi(`/torn/${itemId}`, {
+  async getItemDetails(itemId: number): Promise<IItemDetails[] | null> {
+    const res = await this.api.callTornApi(`/torn/${itemId}`, {
       key: this.api.getKey(),
       selections: 'items'
     })
 
-    return res.items[itemId]
+    return res?.items[itemId]
   }
 
-  async getItemValue(itemId: number): Promise<number | TornError> {
-    const res = await callTornApi(`/torn/${itemId}`, {
+  async getItemValue(itemId: number): Promise<number | null> {
+    const res = await this.api.callTornApi(`/torn/${itemId}`, {
       key: this.api.getKey(),
       selections: 'items'
     })
 
-    return res.items[itemId].market_value
+    return res?.items[itemId].market_value
   }
 }

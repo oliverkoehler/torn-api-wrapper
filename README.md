@@ -73,15 +73,20 @@ const bazaar = await api.market.bazaar.getItems(206)
 ```
 
 ## Error handling
-The wrapper will throw an error if the API returns an error. The error will contain the error message and the error code. The error code is the same as the error code returned by the API.
+The main class `api` contains a `error` property. This property is updated with every request. If an error occurs, the error is stored in the `error` property. The error object contains the following properties: `code` and `message`. The `code` property is the error code of the Torn API. The `message` property is the error message of the Torn API. The requested data is `null` if an error occurs.
 
 ```js
-const bazaar = await api.market.bazaar.getItems(206).catch(e => {
-    console.log(e.message) // "Invalid API key"
-    console.log(e.code) // 2
-})
+const bazaar = await api.market.bazaar.getItems(206)
 
-// Check if bazaar is defined
+// Way 1 - With error handling
+if (api.error) {
+    console.log(api.error)
+    // { code: 2, message: 'Incorrect key' }
+} else {
+    console.log(bazaar)
+}
+
+// Way 2 - No error handling
 if (bazaar) {
     console.log(bazaar)
 }
