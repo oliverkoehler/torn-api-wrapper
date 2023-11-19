@@ -33,19 +33,20 @@ It is possible to pass one `apiKey:string` or `apiKey[]` to the constructor. A r
 ```js
 const TornApi = require('torn-api-wrapper').default
 
-
 const api = new TornApi('YOUR_API_KEY') // Using a single key
 const apiPool = new TornApi(['KEY1', 'KEY2', 'KEY3']) // Using a pool of keys
 
 const getBazaarItems = async () => {
-  const bazaar = await api.market.bazaar.getItems(206).catch(e => console.log(e))
+  const bazaar = await api.market.bazaar.getItems(206)
   
   if (bazaar) {
     console.log(bazaar)
+  } else {
+    console.log(api.error)
   }
 }
 
-getBazaarItems ()
+getBazaarItems()
 ```
 
 ### Installing
@@ -151,23 +152,37 @@ const pointsmarket = await api.market.pointsmarket.getPoints()
 
 ## Torn
 ### Items
-#### `getItemDetails(itemId: number)`
+#### `getItemDetails(itemId: number[])`
 Retrieves the details of an item
 ```js
-const itemDetails = await api.torn.items.getItemDetails(206)
+const itemDetails = await api.torn.items.getItemDetails([206, 207])
 
 // {
-//   name: 'Xanax',
-//   description: "Increases one's energy.",
-//   effect: 'Increases energy by 250 and happiness by 75. Includes side effects.',
-//   requirement: '',
-//   type: 'Drug',
-//   weapon_type: null,
-//   buy_price: 0,
-//   sell_price: 0,
-//   market_value: 842652,
-//   circulation: 4843666,
-//   image: 'https://www.torn.com/images/items/206/large.png'
+//   "206": {
+//     "name": "Xanax",
+//     "description": "Increases one's energy.",
+//     "effect": "Increases energy by 250 and happiness by 75. Includes side effects.",
+//     "requirement": "",
+//     "type": "Drug",
+//     "weapon_type": null,
+//     "buy_price": 0,
+//     "sell_price": 0,
+//     "market_value": 841051,
+//     "circulation": 4841871,
+//     "image": "https://www.torn.com/images/items/206/large.png"
+//   },
+//   "207": {
+//     "name": "Ms Torn Crown '07",
+//     "description": "Awarded to Vixen_ [140202] for winning the Miss Torn City awards 2007!",
+//     "effect": "",
+//     "requirement": "",
+//     "type": "Collectible",
+//     "weapon_type": null,
+//     "buy_price": 0,
+//     "sell_price": 0,
+//     "market_value": 0,
+//     "circulation": 1,
+//     "image": "https://www.torn.com/images/items/207/large.png"
 // }
 ```
 

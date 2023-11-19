@@ -7,7 +7,7 @@ import { ITorn } from './interfaces/torn'
 
 axios.defaults.baseURL = 'https://api.torn.com'
 
-export default class TornApi implements ITornApi {
+class TornApi implements ITornApi {
   apiKeys: string[]
   market: IMarket
   torn: ITorn
@@ -58,3 +58,5 @@ export default class TornApi implements ITornApi {
     }
   }
 }
+
+export { TornApi as default, TornApi }

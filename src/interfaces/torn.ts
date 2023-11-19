@@ -1,9 +1,11 @@
+import { PointListingWithoutId } from './market'
+
 export interface ITorn {
   items: IItems
 }
 
 export interface IItems {
-  getItemDetails(itemId: number): Promise<IItemDetails[]  | null>
+  getItemDetails(itemId: number[]): Promise<{ [id: string]: IItemDetails }  | null>
   getItemValue(itemId: number): Promise<number  | null>
 }
 

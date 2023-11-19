@@ -18,13 +18,13 @@ class Items implements IItems {
     this.api = api
   }
 
-  async getItemDetails(itemId: number): Promise<IItemDetails[] | null> {
-    const res = await this.api.callTornApi(`/torn/${itemId}`, {
+  async getItemDetails(itemIds: number[]) {
+    const res = await this.api.callTornApi(`/torn/${itemIds}`, {
       key: this.api.getKey(),
       selections: 'items'
     })
 
-    return res?.items[itemId]
+    return res?.items
   }
 
   async getItemValue(itemId: number): Promise<number | null> {
