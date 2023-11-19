@@ -8,7 +8,7 @@
     "dev": "ts-node-esm src/index.ts",
     "start": "node dist/src/index.js",
     "lint": "eslint . --ext .ts,.tsx",
-    "push": "npm version patch && git add * && git commit -m \"Bump version\" && tsc &&g it push && npm publish",
+    "push": "npm version patch && git add * && git commit -m \"Bump version\" && tsc && git push && npm publish",
     "push-minor": "npm version minor && git push",
     "push-major": "npm version major && git push"
   },
