@@ -6,7 +6,7 @@ import {
   IBazaar,
   IItemmarket
 } from '../interfaces/market'
-import { ITornApi, TornError } from '../interfaces/base'
+import { ITornApi } from '../interfaces/base'
 
 export default class Market implements IMarket {
   api: ITornApi
@@ -29,6 +29,7 @@ export default class Market implements IMarket {
       if (bazaarItems[0].cost < itemmarketItems[0].cost) {
         return {
           type: 'bazaar',
+          id: bazaarItems[0].ID,
           cost: bazaarItems[0].cost,
           quantity: bazaarItems[0].quantity,
           total_cost: bazaarItems[0].cost * bazaarItems[0].quantity
@@ -36,6 +37,7 @@ export default class Market implements IMarket {
       } else {
         return {
           type: 'itemmarket',
+          id: bazaarItems[0].ID,
           cost: itemmarketItems[0].cost,
           quantity: itemmarketItems[0].quantity,
           total_cost: itemmarketItems[0].cost * itemmarketItems[0].quantity

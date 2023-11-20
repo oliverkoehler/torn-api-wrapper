@@ -54,6 +54,7 @@ interface IPointsMarket {
 
 export interface LowestListing {
   type: 'bazaar' | 'itemmarket'
+  id: number
   cost: number
   quantity: number
   total_cost: number
