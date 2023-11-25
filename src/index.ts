@@ -42,7 +42,7 @@ class TornApi implements ITornApi {
    * @param url
    * @param params
    */
-  async callTornApi (url: string, params?: object): Promise<object> {
+  async callTornApi (url: string, params?): Promise<object> {
     try {
       const { data } = await axios.get(url, {
         params
@@ -52,6 +52,10 @@ class TornApi implements ITornApi {
         this.error = {
           code: data.error.code,
           message: data.error.error
+        }
+
+        if (data.error.code === 2) {
+          this.removeKey(params.key)
         }
         return null
       } else {
