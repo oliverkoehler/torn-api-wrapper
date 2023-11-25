@@ -37,6 +37,17 @@ class TornApi implements ITornApi {
     this.apiKeys = this.apiKeys.filter(k => k !== key)
   }
 
+  async checkIfKeyIsValid(key: string): Promise<number | null> {
+    const res = await this.callTornApi('/key/', {
+      selections: 'info',
+      comment: 'Torn API Wrapper',
+      key
+    })
+
+    // @ts-ignore
+    return res?.access_level
+  }
+
   /**
    * A helper function to call the Torn API and return the data or an error
    * @param url

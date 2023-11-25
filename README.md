@@ -8,7 +8,10 @@ A wrapper to integrate with the Torn API. Completely type-safe.
 3. [Using the wrapper](#using-the-wrapper)
     1. [Initial idea](#initial-idea)
     2. [Error handling](#error-handling)
-    3. [Market](#market)
+    3. [TornAPI](#tornapi)
+        1. [removeKey(key: string)](#removekeykey-string)
+        2. [checkIfKeyIsValid(key: string): Promise<number | null>](#checkifkeyisvalidkey-string-promisenumber--null)
+    4. [Market](#market)
         1. [getLowestListing(itemId: number)](#getlowestlistingitemid-number)
         2. [Bazaar](#bazaar)
             1. [getItems(itemId: number, limit?: number)](#getitemsitemid-number-limit-number)
@@ -17,7 +20,7 @@ A wrapper to integrate with the Torn API. Completely type-safe.
         4. [Pointsmarket](#pointsmarket)
             1. [getPoints()](#getpoints)
             2. [getPointsWithoutIds()](#getpointswithoutids)
-   4. [Torn](#torn)
+   5. [Torn](#torn)
         1. [Items](#items)
             1. [getItemDetails(itemId: number)](#getitemdetailsitemid-number)
             2. [getItemValue(itemId: number)](#getitemvalueitemid-number)
@@ -91,6 +94,18 @@ if (api.error) {
 if (bazaar) {
     console.log(bazaar)
 }
+````
+## TornAPI
+#### `removeKey(key: string)`
+Removes a key from the key pool
+```js
+api.removeKey('YOUR_API_KEY')
+```
+
+#### `checkIfKeyIsValid(key: string): Promise<number | null>`
+Checks if a key is valid. Returns the key level if it is valid, otherwise null
+```js
+await api.checkIfKeyIsValid('YOUR_API_KEY')
 ````
 
 ## Market

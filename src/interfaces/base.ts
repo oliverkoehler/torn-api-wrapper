@@ -26,5 +26,6 @@ export interface ITornApi {
    */
   getKey(): string
   removeKey(key: string): void
+  checkIfKeyIsValid(key: string): Promise<number | null>
   callTornApi(url: string, params?: object): Promise<any | null>
 }
