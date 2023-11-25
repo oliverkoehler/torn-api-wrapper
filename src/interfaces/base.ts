@@ -25,5 +25,6 @@ export interface ITornApi {
    * @returns A random API key from the passed api keys
    */
   getKey(): string
+  removeKey(key: string): void
   callTornApi(url: string, params?: object): Promise<any | null>
 }

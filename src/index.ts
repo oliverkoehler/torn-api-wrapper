@@ -29,6 +29,15 @@ class TornApi implements ITornApi {
   }
 
   /**
+   * Removes a specified API key from the list of API keys.
+   *
+   * @param key - The API key to be removed.
+   */
+  removeKey(key: string) {
+    this.apiKeys = this.apiKeys.filter(k => k !== key)
+  }
+
+  /**
    * A helper function to call the Torn API and return the data or an error
    * @param url
    * @param params
