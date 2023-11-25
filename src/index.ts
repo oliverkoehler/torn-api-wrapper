@@ -44,8 +44,10 @@ class TornApi implements ITornApi {
       key
     })
 
-    // @ts-ignore
-    return res?.access_level
+    if (!res) return null
+    else { // @ts-ignore
+      return res?.access_level
+    }
   }
 
   /**
