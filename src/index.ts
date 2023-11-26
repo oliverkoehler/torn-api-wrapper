@@ -37,6 +37,10 @@ class TornApi implements ITornApi {
     this.apiKeys = this.apiKeys.filter(k => k !== key)
   }
 
+  addKey(key: string) {
+    this.apiKeys.push(key)
+  }
+
   async checkIfKeyIsValid(key: string): Promise<number | null> {
     const res = await this.callTornApi('/key/', {
       selections: 'info',

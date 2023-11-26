@@ -9,8 +9,9 @@ A wrapper to integrate with the Torn API. Completely type-safe.
     1. [Initial idea](#initial-idea)
     2. [Error handling](#error-handling)
     3. [TornAPI](#tornapi)
-        1. [removeKey(key: string)](#removekeykey-string)
-        2. [checkIfKeyIsValid(key: string): Promise<number | null>](#checkifkeyisvalidkey-string-promisenumber--null)
+       1. [addKey(key: string)](#addkeykey-string)
+       2. [removeKey(key: string)](#removekeykey-string)
+       3. [checkIfKeyIsValid(key: string): Promise<number | null>](#checkifkeyisvalidkey-string-promisenumber--null)
     4. [Market](#market)
         1. [getLowestListing(itemId: number)](#getlowestlistingitemid-number)
         2. [Bazaar](#bazaar)
@@ -96,6 +97,11 @@ if (bazaar) {
 }
 ````
 ## TornAPI
+#### `addKey(key: string)`
+Adds a key to the key pool
+```js
+api.addKey('YOUR_API_KEY')
+```
 #### `removeKey(key: string)`
 Removes a key from the key pool
 ```js
@@ -106,6 +112,13 @@ api.removeKey('YOUR_API_KEY')
 Checks if a key is valid. Returns the key level if it is valid, otherwise null
 ```js
 await api.checkIfKeyIsValid('YOUR_API_KEY')
+
+if (api.error) {
+    console.log(api.error)
+    // { code: 2, message: 'Incorrect key' }
+} else {
+    console.log(bazaar)
+}
 ````
 
 ## Market
