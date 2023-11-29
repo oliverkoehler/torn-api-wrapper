@@ -23,7 +23,7 @@ A wrapper to integrate with the Torn API. Completely type-safe.
             2. [getPointsWithoutIds()](#getpointswithoutids)
    5. [Torn](#torn)
         1. [Items](#items)
-            1. [getItemDetails(itemId: number)](#getitemdetailsitemid-number)
+            1. [getItems(itemId?: number[])](#getitemsitemid-number)
             2. [getItemValue(itemId: number)](#getitemvalueitemid-number)
 4. [Versioning](#versioning)
 5. [Authors](#authors)
@@ -180,7 +180,7 @@ const pointsmarket = await api.market.pointsmarket.getPoints()
 
 ## Torn
 ### Items
-#### `getItemDetails(itemId: number[])`
+#### `getItems(itemId?: number[])`
 Retrieves the details of an item
 ```js
 const itemDetails = await api.torn.items.getItemDetails([206, 207])

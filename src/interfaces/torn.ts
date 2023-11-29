@@ -5,7 +5,7 @@ export interface ITorn {
 }
 
 export interface IItems {
-  getItemDetails(itemId: number[]): Promise<{ [id: string]: IItemDetails }  | null>
+  getItems(itemId?: number[]): Promise<{ [id: string]: IItemDetails }  | null>
   getItemValue(itemId: number): Promise<number  | null>
 }
 
