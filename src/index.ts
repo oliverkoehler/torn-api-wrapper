@@ -13,6 +13,7 @@ class TornApi implements ITornApi {
   torn: ITorn
   error: ITornError
   debug: boolean = false
+  private retryTimeout: number = 5000
   private retries: number = 0
 
   /**
@@ -32,6 +33,10 @@ class TornApi implements ITornApi {
    */
   setDebug(debug: boolean) {
     this.debug = debug
+  }
+
+  setRetryTimeout(timeout: number) {
+    this.retryTimeout = timeout
   }
 
   // return a random key from the array
@@ -84,7 +89,6 @@ class TornApi implements ITornApi {
   async callTornApi (url: string, params?): Promise<object> {
     try {
       if (this.debug) {
-        console.log('API Key: ', params.key)
         console.log('Calling Torn API... ', url, params)
       }
 
@@ -104,8 +108,10 @@ class TornApi implements ITornApi {
         }
 
         if (this.retries < 5) {
-          this.retries++
-          return this.callTornApi(url, params)
+          setTimeout(async () => {
+            this.retries++
+            await this.callTornApi(url, params)
+          }, this.retryTimeout)
         }
 
         return null

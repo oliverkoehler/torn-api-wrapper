@@ -31,4 +31,5 @@ export interface ITornApi {
   checkIfKeyIsValid(key: string): Promise<number | null>
   callTornApi(url: string, params?: object): Promise<any | null>
   setDebug(debug: boolean): void
+  setRetryTimeout(timeout: number): void
 }
