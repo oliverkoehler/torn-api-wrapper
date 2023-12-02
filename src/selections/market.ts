@@ -23,7 +23,7 @@ export default class Market implements IMarket {
 
   async getLowestListing(itemId: number): Promise<LowestListing | null> {
     const bazaarItems = await this.bazaar.getItems(itemId, 1)
-
+    
     if (this.api.error) {
       return null
     }

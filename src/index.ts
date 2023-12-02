@@ -12,8 +12,6 @@ class TornApi implements ITornApi {
   market: IMarket
   torn: ITorn
   error: ITornError
-  debug: boolean = false
-  private retries: number = 0
 
   /**
    * @param apiKeys - An array of API keys or a single API key
@@ -23,15 +21,6 @@ class TornApi implements ITornApi {
 
     this.market = new Market(this)
     this.torn = new Torn(this)
-  }
-
-  /**
-   * Sets the debug property of the class.
-   *
-   * @param debug - Whether to enable debug mode or not.
-   */
-  setDebug(debug: boolean) {
-    this.debug = debug
   }
 
   // return a random key from the array
@@ -64,36 +53,19 @@ class TornApi implements ITornApi {
       return res?.access_level
     }
   }
-  
+
   /**
- * This method is used to make a GET request to the Torn API.
- *
- * @async
- * @param {string} url - The endpoint of the Torn API to call.
- * @param {object} [params] - The parameters to pass along with the GET request.
- * @returns {Promise<object>} - The data returned from the Torn API or null if an error occurred.
- *
- * The method works as follows:
- * 1. It makes a GET request to the provided URL with the provided parameters.
- * 2. If the response contains an error, it sets the error property of the class to the error received.
- * 3. If the error code is 2, it removes the API key used from the list of API keys.
- * 4. If the number of retries is less than 5, it increments the retries and makes the API call again.
- * 5. If the response does not contain an error, it resets the retries to 0, clears the error property and returns the data.
- * 6. If an exception occurs during the API call, it sets the error property to the error received and returns null.
- */
+   * A helper function to call the Torn API and return the data or an error
+   * @param url
+   * @param params
+   */
   async callTornApi (url: string, params?): Promise<object> {
     try {
-      if (this.debug) {
-        console.log('API Key: ', params.key)
-        console.log('Calling Torn API... ', url, params)
-      }
-
       const { data } = await axios.get(url, {
         params
       })
 
       if (data.error) {
-        if (this.debug) console.log('Wrapper API Error: ', data.error.error, ' Code: ', data.error.code, ' Retries: ', this.retries)
         this.error = {
           code: data.error.code,
           message: data.error.error
@@ -102,15 +74,8 @@ class TornApi implements ITornApi {
         if (data.error.code === 2) {
           this.removeKey(params.key)
         }
-
-        if (this.retries < 5) {
-          this.retries++
-          return this.callTornApi(url, params)
-        }
-
         return null
       } else {
-        this.retries = 0
         this.error = undefined
         return data
       }

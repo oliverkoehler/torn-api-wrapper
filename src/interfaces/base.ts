@@ -20,7 +20,6 @@ export interface ITornApi {
   market: IMarket
   torn: ITorn
   error: ITornError | undefined
-  debug: boolean
 
   /**
    * @returns A random API key from the passed api keys
@@ -30,5 +29,4 @@ export interface ITornApi {
   addKey(key: string): void
   checkIfKeyIsValid(key: string): Promise<number | null>
   callTornApi(url: string, params?: object): Promise<any | null>
-  setDebug(debug: boolean): void
 }
