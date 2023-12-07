@@ -67,6 +67,7 @@ class TornApi implements ITornApi {
 
       if (data.error) {
         this.error = {
+          apiKey: params.key,
           code: data.error.code,
           message: data.error.error
         }
@@ -81,6 +82,7 @@ class TornApi implements ITornApi {
       }
     } catch(e) {
       this.error = {
+        apiKey: params.key,
         code: e.response.data.error.code,
         message: e.response.data.error.error
       }

@@ -86,7 +86,7 @@ const bazaar = await api.market.bazaar.getItems(206)
 // Way 1 - With error handling
 if (api.error) {
     console.log(api.error)
-    // { code: 2, message: 'Incorrect key' }
+    // { code: 2, message: 'Incorrect key', apiKey: 'YOUR_API_KEY' }
 } else {
     console.log(bazaar)
 }

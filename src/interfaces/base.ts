@@ -14,6 +14,7 @@ export class TornError extends Error {
 export interface ITornError {
   code: number
   message: string
+  apiKey: string
 }
 
 export interface ITornApi {
