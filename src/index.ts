@@ -72,7 +72,7 @@ class TornApi implements ITornApi {
           message: data.error.error
         }
 
-        if (data.error.code === 2) {
+        if (data.error.code === 2 || data.error.code === 13) {
           this.removeKey(params.key)
         }
         return null
